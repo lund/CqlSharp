@@ -231,7 +231,7 @@ namespace CqlSharp.Serialization
 
             Func<T, object> func;
 
-            if (_readFuncs.TryGetValue(column, out func))
+            if (_readFuncs.TryGetValue(column.ToLower(), out func))
             {
                 value = func(source);
                 return true;
