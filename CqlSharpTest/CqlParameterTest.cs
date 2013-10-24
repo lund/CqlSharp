@@ -84,6 +84,23 @@ namespace CqlSharp.Test
         }
 
         [TestMethod]
+        public void SetNameOnlyParametersFromObjectIntoParameterCollectionWithUpperCaseParameterNames()
+        {
+            var collection = new CqlParameterCollection();
+            collection.Add("Id", CqlType.Int);
+            collection.Add("Value", CqlType.Text);
+            collection.Add("Ignored", CqlType.Blob);
+
+            var a = new A { Id = 1, Value2 = new byte[] { 1, 2 }, Value = "Hello!" };
+
+            collection.Set(a);
+
+            Assert.AreEqual(a.Id, collection["Id"].Value);
+            Assert.AreEqual(a.Value, collection["Value"].Value);
+            Assert.IsNull(collection["Ignored"].Value);
+        }
+
+        [TestMethod]
         public void SetParametersFromTwoObjects()
         {
             var collection = new CqlParameterCollection();
